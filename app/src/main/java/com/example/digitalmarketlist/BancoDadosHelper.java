@@ -2,8 +2,10 @@ package com.example.digitalmarketlist;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.digitalmarketlist.objetos.Lista;
 import com.example.digitalmarketlist.objetos.Usuario;
@@ -76,6 +78,32 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         values.put(CRIADO_EM, getDateTime());
 
         return db.insert(TABLE_USUARIO, null, values);
+    }
+
+    public Usuario buscarUsuario(String email, String senha) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_USUARIO + " WHERE "
+                + EMAIL + " = '" + email + "' AND " + SENHA + " = '" + senha + "'";
+
+        Log.e("LOG", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null){
+            c.moveToFirst();
+        }
+
+        assert c != null;
+        if (c.moveToFirst()) {
+            Usuario usuario = new Usuario();
+            usuario.setId(c.getInt(c.getColumnIndex(ID)));
+            usuario.setEmail((c.getString(c.getColumnIndex(EMAIL))));
+            usuario.setSenha((c.getString(c.getColumnIndex(SENHA))));
+
+            return usuario;
+        }
+        return null;
     }
 
     long criarListaCompra(Lista lista){
