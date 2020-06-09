@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.digitalmarketlist.objetos.Lista;
+import com.example.digitalmarketlist.objetos.Usuario;
 
 public class MainActivity extends AppCompatActivity {
     BancoDadosHelper bancoDadosHelper;
@@ -22,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         Usuario user1 = new Usuario("teste 1", "teste 1");
         long tag1_id = bancoDadosHelper.createUsuario(user1);
 
+        Lista lista1 = new Lista(1,"Minha Lista", "Arroz", 12.5);
+        long lista_id = bancoDadosHelper.criarListaCompra(lista1);
+
+        Toast.makeText(this, ""+lista1, Toast.LENGTH_SHORT).show();
 
         botaoLogin = findViewById(R.id.btt_login_main);
         botaoRegistro = findViewById(R.id.btt_registrar_main);

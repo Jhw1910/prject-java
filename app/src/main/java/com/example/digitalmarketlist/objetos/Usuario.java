@@ -1,4 +1,4 @@
-package com.example.digitalmarketlist;
+package com.example.digitalmarketlist.objetos;
 
 public class Usuario {
     int id;
