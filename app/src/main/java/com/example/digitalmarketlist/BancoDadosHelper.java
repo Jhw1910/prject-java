@@ -88,7 +88,9 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         values.put(PRECO_PRODUTO, lista.getPreco());
         values.put(CRIADO_EM, getDateTime());
 
-        return db.insert(TABLE_LISTA, null, values);
+        long lista_id = db.insert(TABLE_LISTA, null, values);
+
+        return lista_id;
     }
 
     private String getDateTime() {

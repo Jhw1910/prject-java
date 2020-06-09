@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         bancoDadosHelper = new BancoDadosHelper(getApplicationContext());
 
-        Usuario user1 = new Usuario("teste 1", "teste 1");
-        long tag1_id = bancoDadosHelper.createUsuario(user1);
-
         Lista lista1 = new Lista(1,"Minha Lista", "Arroz", 12.5);
         long lista_id = bancoDadosHelper.criarListaCompra(lista1);
 
