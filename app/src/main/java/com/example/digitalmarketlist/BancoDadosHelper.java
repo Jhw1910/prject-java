@@ -75,9 +75,7 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         values.put(SENHA, usuario.getSenha());
         values.put(CRIADO_EM, getDateTime());
 
-        long usuario_id = db.insert(TABLE_USUARIO, null, values);
-
-        return usuario_id;
+        return db.insert(TABLE_USUARIO, null, values);
     }
 
     long criarListaCompra(Lista lista){
@@ -90,9 +88,7 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         values.put(PRECO_PRODUTO, lista.getPreco());
         values.put(CRIADO_EM, getDateTime());
 
-        long lista_id = db.insert(TABLE_LISTA, null, values);
-
-        return lista_id;
+        return db.insert(TABLE_LISTA, null, values);
     }
 
     private String getDateTime() {
