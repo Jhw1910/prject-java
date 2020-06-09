@@ -93,7 +93,7 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_USUARIO, null, values);
     }
 
-    public Usuario buscarUsuario(String email, String senha) {
+    Usuario buscarUsuario(String email, String senha) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_USUARIO + " WHERE "
