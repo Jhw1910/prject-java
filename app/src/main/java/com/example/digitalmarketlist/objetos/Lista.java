@@ -4,38 +4,32 @@ public class Lista {
     int id;
     int dono;
     String nome;
-    String produto;
-    Double preco;
     String criado_em;
 
     public Lista() {
     }
 
-    public Lista(int dono, String nome, String produto, Double preco) {
+    public Lista(int dono, String nome) {
         this.dono = dono;
         this.nome = nome;
-        this.produto = produto;
-        this.preco = preco;
     }
 
-    public Lista(int id, int dono, String nome, String produto, Double preco) {
+    public Lista(int id, int dono, String nome) {
         this.id = id;
         this.dono = dono;
         this.nome = nome;
-        this.produto = produto;
-        this.preco = preco;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getDono() {
-        return dono;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getDono() {
+        return dono;
     }
 
     public void setDono(int dono) {
@@ -50,20 +44,8 @@ public class Lista {
         this.nome = nome;
     }
 
-    public String getProduto() {
-        return produto;
-    }
-
-    public void setProduto(String produto) {
-        this.produto = produto;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public String getCriadoEm() {
+        return criado_em;
     }
 
     public void setCriadoEm(String criado_em) {
