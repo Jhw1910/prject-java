@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    BancoDadosHelper bancoDadosHelper;
     private Button botaoLogin;
     private Button botaoRegistro;
 
@@ -15,6 +16,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bancoDadosHelper = new BancoDadosHelper(getApplicationContext());
+
+        Usuario user1 = new Usuario("teste 1", "teste 1");
+        long tag1_id = bancoDadosHelper.createUsuario(user1);
+
 
         botaoLogin = findViewById(R.id.btt_login_main);
         botaoRegistro = findViewById(R.id.btt_registrar_main);
