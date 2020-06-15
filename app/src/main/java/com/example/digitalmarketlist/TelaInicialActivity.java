@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class TelaInicialActivity extends AppCompatActivity {
     private Button sair;
-    private Button carrinho;
+    private Button minhasListas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class TelaInicialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tela_inicial);
 
         sair = findViewById(R.id.btt_sair_tela_inicial);
-        carrinho = findViewById(R.id.btt_carrinho_tela_inicial);
+        minhasListas = findViewById(R.id.btt_minhas_listas_tela_inicial);
 
         sair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,10 +26,10 @@ public class TelaInicialActivity extends AppCompatActivity {
             }
         });
 
-        carrinho.setOnClickListener(new View.OnClickListener() {
+        minhasListas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TelaInicialActivity.this, CarrinhoFinalActivity.class);
+                Intent intent = new Intent(TelaInicialActivity.this, MinhasListasActivity.class);
                 startActivity(intent);
             }
         });

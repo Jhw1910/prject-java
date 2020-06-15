@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.digitalmarketlist.objetos.GroceryContract;
 import com.example.digitalmarketlist.objetos.Lista;
 import com.example.digitalmarketlist.objetos.Usuario;
 
@@ -68,6 +69,14 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        final String SQL_CREATE_GROCERYLIST_TABLE = "CREATE TABLE " +
+                GroceryContract.GroceryEntry.TABLE_NAME + " (" +
+                GroceryContract.GroceryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                GroceryContract.GroceryEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                GroceryContract.GroceryEntry.COLUMN_AMOUNT + " INTEGER NOT NULL, " +
+                GroceryContract.GroceryEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ");";
+        db.execSQL(SQL_CREATE_GROCERYLIST_TABLE);
         db.execSQL(CREATE_TABLE_USUARIO);
         db.execSQL(CREATE_TABLE_PRODUTO);
         db.execSQL(CREATE_TABLE_LISTA);

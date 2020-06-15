@@ -19,7 +19,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".TelaInicialActivity" />
         <activity android:name=".RegistroActivity" />
-        <activity android:name=".CarrinhoFinalActivity"/>
+        <activity android:name=".CarrinhoFinalActivity" />
+        <activity android:name=".MinhasListasActivity" />
+        <activity android:name=".CadastroListasActivity" />
     </application>
 
 </manifest>
