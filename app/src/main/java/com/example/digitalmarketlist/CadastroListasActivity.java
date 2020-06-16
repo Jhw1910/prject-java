@@ -4,28 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.digitalmarketlist.adapter.GroceryAdapter;
-import com.example.digitalmarketlist.objetos.GroceryContract;
-import com.example.digitalmarketlist.objetos.Produtos;
+import com.example.digitalmarketlist.adapter.MinhaLista;
+import com.example.digitalmarketlist.objetos.Lista;
 
+import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
+import java.util.function.DoublePredicate;
 
 public class CadastroListasActivity extends AppCompatActivity {
-    private GroceryAdapter mAdapter;
-    ArrayList<Produtos> produtos = new ArrayList<>();
-    private EditText mEditTextName;
-    private TextView mTextViewAmount;
-    private int mAmount = 0;
+    private MinhaLista minhaListaAdapter;
+    ArrayList<Lista> minhaLista = new ArrayList<>();
+    private EditText nomeProduto;
+    private EditText valorProduto;
+    private TextView quantidadeProduto;
+    private Button adicionarLista;
+    private int amount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +38,12 @@ public class CadastroListasActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new GroceryAdapter(this, produtos);
-        recyclerView.setAdapter(mAdapter);
-        mEditTextName = findViewById(R.id.edittext_name);
-        mTextViewAmount = findViewById(R.id.textview_amount);
+        minhaListaAdapter = new MinhaLista(this, minhaLista);
+        recyclerView.setAdapter(minhaListaAdapter);
+        nomeProduto = findViewById(R.id.edittext_name);
+        valorProduto = findViewById(R.id.valor_produto);
+        quantidadeProduto = findViewById(R.id.textview_amount);
+        adicionarLista = findViewById(R.id.btt_confirmar_cadastro_listas);
         Button buttonIncrease = findViewById(R.id.button_increase);
         Button buttonDecrease = findViewById(R.id.button_decrease);
         Button buttonAdd = findViewById(R.id.button_add);
@@ -63,22 +69,54 @@ public class CadastroListasActivity extends AppCompatActivity {
     }
 
     private void increase() {
-        mAmount++;
-        mTextViewAmount.setText(String.valueOf(mAmount));
+        amount++;
+        quantidadeProduto.setText(String.valueOf(amount));
     }
     private void decrease() {
-        if (mAmount > 0) {
-            mAmount--;
-            mTextViewAmount.setText(String.valueOf(mAmount));
+        if (amount > 0) {
+            amount--;
+            quantidadeProduto.setText(String.valueOf(amount));
         }
     }
 
     private void addItem() {
-        if (mEditTextName.getText().toString().trim().length() == 0 || mAmount == 0) {
+        if (nomeProduto.getText().toString().trim().length() == 0 || amount == 0) {
             return;
         }
-        String name = mEditTextName.getText().toString();
-        produtos.add(new Produtos(1, name, "3"));
-        mAdapter.notifyDataSetChanged();
+        String produto = nomeProduto.getText().toString();
+        minhaLista.add(new Lista("Nome Lista", produto, Integer.parseInt(quantidadeProduto.getText().toString()), Double.parseDouble(valorProduto.getText().toString())));
+        minhaListaAdapter.notifyDataSetChanged();
+    }
+
+    private static class MoneyTextWatcher implements TextWatcher {
+        private final WeakReference<EditText> editTextWeakReference;
+
+        MoneyTextWatcher(EditText editText) {
+            editTextWeakReference = new WeakReference<EditText>(editText);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            EditText editText = editTextWeakReference.get();
+            if (editText == null) return;
+            String s = editable.toString();
+            if (s.isEmpty()) return;
+            Locale myLocale = new Locale("pt", "BR");
+            editText.removeTextChangedListener(this);
+            String cleanString = s.replaceAll("[R$.,]", "");
+            BigDecimal parsed = new BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
+            String formatted = NumberFormat.getCurrencyInstance(myLocale).format(parsed);
+            editText.setText(formatted);
+            editText.setSelection(formatted.length());
+            editText.addTextChangedListener(this);
+        }
     }
 }

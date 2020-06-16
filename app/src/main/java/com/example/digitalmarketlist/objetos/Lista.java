@@ -2,22 +2,30 @@ package com.example.digitalmarketlist.objetos;
 
 public class Lista {
     int id;
-    int dono;
     String nome;
+    String produto;
+    int quantidade;
+    Double preco;
     String criado_em;
 
     public Lista() {
     }
 
-    public Lista(int dono, String nome) {
-        this.dono = dono;
+    public Lista(String nome, String produto, int quantidade, Double preco) {
         this.nome = nome;
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.criado_em = criado_em;
     }
 
-    public Lista(int id, int dono, String nome) {
+    public Lista(int id, String nome, String produto, int quantidade, Double preco) {
         this.id = id;
-        this.dono = dono;
         this.nome = nome;
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.criado_em = criado_em;
     }
 
     public int getId() {
@@ -28,20 +36,36 @@ public class Lista {
         this.id = id;
     }
 
-    public int getDono() {
-        return dono;
-    }
-
-    public void setDono(int dono) {
-        this.dono = dono;
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public String getCriadoEm() {

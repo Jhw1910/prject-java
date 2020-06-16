@@ -2,7 +2,6 @@ package com.example.digitalmarketlist.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.digitalmarketlist.R;
-import com.example.digitalmarketlist.objetos.Produtos;
+import com.example.digitalmarketlist.objetos.Lista;
 
 import java.util.ArrayList;
 
-public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryViewHolder> {
+public class MinhaLista extends RecyclerView.Adapter<MinhaLista.GroceryViewHolder> {
     private Context mContext;
-    private ArrayList<Produtos> mCursor;
-    public GroceryAdapter(Context context, ArrayList<Produtos> cursor) {
+    private ArrayList<Lista> mCursor;
+    public MinhaLista(Context context, ArrayList<Lista> cursor) {
         mContext = context;
         mCursor = cursor;
     }
     static class GroceryViewHolder extends RecyclerView.ViewHolder {
-        TextView nameText;
-        TextView countText;
+        TextView nome;
+        TextView preco;
+        TextView quantidade;
         @SuppressLint("CutPasteId")
         GroceryViewHolder(View itemView) {
             super(itemView);
-            nameText = itemView.findViewById(R.id.textview_name_item);
-            countText = itemView.findViewById(R.id.textview_amount_item);
+            nome = itemView.findViewById(R.id.textview_name_item);
+            preco = itemView.findViewById(R.id.textview_amount_item);
+            quantidade = itemView.findViewById(R.id.textview_qnt_item);
         }
     }
 
@@ -44,9 +45,10 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
 
     @Override
     public void onBindViewHolder(@NonNull GroceryViewHolder holder, int position) {
-        Produtos produto = mCursor.get(position);
-        holder.nameText.setText(produto.getNome());
-        holder.countText.setText(String.valueOf(produto.getValor()));
+        Lista lista = mCursor.get(position);
+        holder.nome.setText(lista.getProduto());
+        holder.preco.setText(String.valueOf(lista.getPreco()));
+        holder.quantidade.setText(String.valueOf(lista.getQuantidade()));
     }
     @Override
     public int getItemCount() {
