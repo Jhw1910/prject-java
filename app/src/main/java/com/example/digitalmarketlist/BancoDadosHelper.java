@@ -84,8 +84,9 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_USUARIO, null, values);
     }
 
-    void createLista(ArrayList<Lista> listas) {
+    ArrayList<Long> createLista(ArrayList<Lista> listas) {
         int tamanhoLista = listas.size();
+        ArrayList<Long> ids = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         try {
@@ -96,11 +97,13 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
                 values.put(PRECO, listas.get(i).getPreco());
                 values.put(CRIADO_EM, getDateTime());
 
-                db.insert(TABLE_LISTA, null, values);
+                long id = db.insert(TABLE_LISTA, null, values);
+                ids.add(id);
             }
         }catch(Exception e){
             Log.e("Error", Objects.requireNonNull(e.getLocalizedMessage()));
         }
+        return ids;
     }
 
     Usuario buscarUsuario(String email, String senha) {

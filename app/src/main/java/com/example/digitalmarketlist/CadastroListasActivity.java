@@ -23,12 +23,13 @@ import java.util.Locale;
 import java.util.function.DoublePredicate;
 
 public class CadastroListasActivity extends AppCompatActivity {
+    BancoDadosHelper bancoDadosHelper;
     private MinhaLista minhaListaAdapter;
     ArrayList<Lista> minhaLista = new ArrayList<>();
+    private EditText nomeLista;
     private EditText nomeProduto;
     private EditText valorProduto;
     private TextView quantidadeProduto;
-    private Button adicionarLista;
     private int amount = 0;
 
     @Override
@@ -36,17 +37,20 @@ public class CadastroListasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_listas);
 
+        bancoDadosHelper = new BancoDadosHelper(getApplicationContext());
+
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         minhaListaAdapter = new MinhaLista(this, minhaLista);
         recyclerView.setAdapter(minhaListaAdapter);
+        nomeLista = findViewById(R.id.nome_lista_cadastro_listas);
         nomeProduto = findViewById(R.id.edittext_name);
         valorProduto = findViewById(R.id.valor_produto);
         quantidadeProduto = findViewById(R.id.textview_amount);
-        adicionarLista = findViewById(R.id.btt_confirmar_cadastro_listas);
         Button buttonIncrease = findViewById(R.id.button_increase);
         Button buttonDecrease = findViewById(R.id.button_decrease);
         Button buttonAdd = findViewById(R.id.button_add);
+        Button adicionarLista = findViewById(R.id.btt_confirmar_cadastro_listas);
 
         buttonIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +68,17 @@ public class CadastroListasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addItem();
+            }
+        });
+        adicionarLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Long> ids = bancoDadosHelper.createLista(minhaLista);
+                if(ids.size() > 0){
+                    minhaLista.removeAll(minhaLista);
+                    minhaListaAdapter.notifyDataSetChanged();
+                    nomeLista.setText("");
+                }
             }
         });
     }
@@ -84,8 +99,12 @@ public class CadastroListasActivity extends AppCompatActivity {
             return;
         }
         String produto = nomeProduto.getText().toString();
-        minhaLista.add(new Lista("Nome Lista", produto, Integer.parseInt(quantidadeProduto.getText().toString()), Double.parseDouble(valorProduto.getText().toString())));
+        minhaLista.add(new Lista(nomeLista.getText().toString(), produto, Integer.parseInt(quantidadeProduto.getText().toString()), Double.parseDouble(valorProduto.getText().toString())));
         minhaListaAdapter.notifyDataSetChanged();
+
+        nomeProduto.setText("");
+        valorProduto.setText("");
+        amount = 0;
     }
 
     private static class MoneyTextWatcher implements TextWatcher {
