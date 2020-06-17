@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,7 +16,7 @@ import com.example.digitalmarketlist.objetos.Lista;
 
 import java.util.ArrayList;
 
-public class MinhasListasActivity extends AppCompatActivity {
+public class MinhasListasActivity extends AppCompatActivity implements MinhaListaHome.OnListaListener {
     BancoDadosHelper bancoDadosHelper;
     ArrayList<String> minhaLista = new ArrayList<>();
 
@@ -30,7 +31,7 @@ public class MinhasListasActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        MinhaListaHome minhaListaAdapter = new MinhaListaHome(this, minhaLista);
+        MinhaListaHome minhaListaAdapter = new MinhaListaHome(this, minhaLista, this);
         recyclerView.setAdapter(minhaListaAdapter);
 
         Button novaLista = findViewById(R.id.btt_novo_minhas_listas);
@@ -42,5 +43,12 @@ public class MinhasListasActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onListaClick(int position) {
+        Intent intent = new Intent(this, ListasItensActivity.class);
+        intent.putExtra("nomeLista", minhaLista.get(position));
+        startActivity(intent);
     }
 }

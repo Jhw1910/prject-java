@@ -17,17 +17,33 @@ import java.util.ArrayList;
 public class MinhaListaHome extends RecyclerView.Adapter<MinhaListaHome.MinhaListaHomeViewHolder> {
     private Context mContext;
     private ArrayList<String> mCursor;
-    public MinhaListaHome(Context context, ArrayList<String> cursor) {
+    private OnListaListener onListaListener;
+
+    public MinhaListaHome(Context context, ArrayList<String> cursor, OnListaListener onListaListener) {
         mContext = context;
         mCursor = cursor;
+        this.onListaListener = onListaListener;
     }
-    static class MinhaListaHomeViewHolder extends RecyclerView.ViewHolder {
+    static class MinhaListaHomeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView nome;
+        OnListaListener onListaListener;
         @SuppressLint("CutPasteId")
-        MinhaListaHomeViewHolder(View itemView) {
+        MinhaListaHomeViewHolder(View itemView, OnListaListener onListaListener) {
             super(itemView);
             nome = itemView.findViewById(R.id.txt_nome_lista);
+            this.onListaListener = onListaListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onListaListener.onListaClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnListaListener{
+        void onListaClick(int position);
     }
 
     @NonNull
@@ -35,7 +51,7 @@ public class MinhaListaHome extends RecyclerView.Adapter<MinhaListaHome.MinhaLis
     public MinhaListaHomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_minha_lista, parent, false);
-        return new MinhaListaHomeViewHolder(view);
+        return new MinhaListaHomeViewHolder(view, onListaListener);
     }
 
     @Override

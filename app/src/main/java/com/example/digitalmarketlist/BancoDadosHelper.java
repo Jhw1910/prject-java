@@ -14,7 +14,6 @@ import com.example.digitalmarketlist.objetos.Usuario;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -149,6 +148,30 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
             do {
                 String lista = "";
                 lista = c.getString(c.getColumnIndex(NOME));
+                listas.add(lista);
+            } while (c.moveToNext());
+        }
+        return listas;
+    }
+
+    ArrayList<Lista> buscarItemListas(String nome) {
+        ArrayList<Lista> listas = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_LISTA + " WHERE "
+                + NOME + " = '" + nome + "'";
+
+        Log.e("LOG", selectQuery);
+
+        @SuppressLint("Recycle") Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Lista lista = new Lista();
+                lista.setNome(c.getString(c.getColumnIndex(NOME)));
+                lista.setProduto(c.getString(c.getColumnIndex(PRODUTO)));
+                lista.setQuantidade(c.getInt(c.getColumnIndex(QUANTIDADE)));
+                lista.setPreco(c.getDouble(c.getColumnIndex(PRECO)));
                 listas.add(lista);
             } while (c.moveToNext());
         }
