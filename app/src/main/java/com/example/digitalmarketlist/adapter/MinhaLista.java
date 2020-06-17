@@ -15,19 +15,19 @@ import com.example.digitalmarketlist.objetos.Lista;
 
 import java.util.ArrayList;
 
-public class MinhaLista extends RecyclerView.Adapter<MinhaLista.GroceryViewHolder> {
+public class MinhaLista extends RecyclerView.Adapter<MinhaLista.MinhaListaViewHolder> {
     private Context mContext;
     private ArrayList<Lista> mCursor;
     public MinhaLista(Context context, ArrayList<Lista> cursor) {
         mContext = context;
         mCursor = cursor;
     }
-    static class GroceryViewHolder extends RecyclerView.ViewHolder {
+    static class MinhaListaViewHolder extends RecyclerView.ViewHolder {
         TextView nome;
         TextView preco;
         TextView quantidade;
         @SuppressLint("CutPasteId")
-        GroceryViewHolder(View itemView) {
+        MinhaListaViewHolder(View itemView) {
             super(itemView);
             nome = itemView.findViewById(R.id.textview_name_item);
             preco = itemView.findViewById(R.id.textview_amount_item);
@@ -37,14 +37,14 @@ public class MinhaLista extends RecyclerView.Adapter<MinhaLista.GroceryViewHolde
 
     @NonNull
     @Override
-    public GroceryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MinhaListaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.item_adicionar_lista, parent, false);
-        return new GroceryViewHolder(view);
+        return new MinhaListaViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GroceryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MinhaListaViewHolder holder, int position) {
         Lista lista = mCursor.get(position);
         holder.nome.setText(lista.getProduto());
         holder.preco.setText(String.valueOf(lista.getPreco()));
