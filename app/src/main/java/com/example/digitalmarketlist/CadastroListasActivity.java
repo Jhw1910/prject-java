@@ -51,6 +51,7 @@ public class CadastroListasActivity extends AppCompatActivity {
         Button buttonDecrease = findViewById(R.id.button_decrease);
         Button buttonAdd = findViewById(R.id.button_add);
         Button adicionarLista = findViewById(R.id.btt_confirmar_cadastro_listas);
+        Button voltar = findViewById(R.id.btt_voltar_cadastro_listas);
 
         buttonIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +80,12 @@ public class CadastroListasActivity extends AppCompatActivity {
                     minhaListaAdapter.notifyDataSetChanged();
                     nomeLista.setText("");
                 }
+            }
+        });
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
