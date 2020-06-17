@@ -1,5 +1,6 @@
 package com.example.digitalmarketlist;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import com.example.digitalmarketlist.objetos.Usuario;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -131,6 +133,26 @@ public class BancoDadosHelper extends SQLiteOpenHelper {
             return usuario;
         }
         return null;
+    }
+
+    ArrayList<String> buscarListas() {
+        ArrayList<String> listas = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * from listas GROUP BY nome";
+
+        Log.e("LOG", selectQuery);
+
+        @SuppressLint("Recycle") Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                String lista = "";
+                lista = c.getString(c.getColumnIndex(NOME));
+                listas.add(lista);
+            } while (c.moveToNext());
+        }
+        return listas;
     }
 
     private String getDateTime() {

@@ -16,25 +16,24 @@ import com.example.digitalmarketlist.objetos.Lista;
 import java.util.ArrayList;
 
 public class MinhasListasActivity extends AppCompatActivity {
-    private MinhaListaHome minhaListaAdapter;
+    BancoDadosHelper bancoDadosHelper;
     ArrayList<String> minhaLista = new ArrayList<>();
-    private Button novaLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minhas_listas);
 
-        minhaLista.add("Teste");
-        minhaLista.add("Teste 01");
-        minhaLista.add("Teste 02");
+        bancoDadosHelper = new BancoDadosHelper(getApplicationContext());
+
+        minhaLista = bancoDadosHelper.buscarListas();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        minhaListaAdapter = new MinhaListaHome(this, minhaLista);
+        MinhaListaHome minhaListaAdapter = new MinhaListaHome(this, minhaLista);
         recyclerView.setAdapter(minhaListaAdapter);
 
-        novaLista = findViewById(R.id.btt_novo_minhas_listas);
+        Button novaLista = findViewById(R.id.btt_novo_minhas_listas);
 
         novaLista.setOnClickListener(new View.OnClickListener() {
             @Override
